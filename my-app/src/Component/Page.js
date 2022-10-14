@@ -30,11 +30,15 @@ export default function Page(props){
     const [data,setData] = React.useState([])
     const [pageNumber,setPageNumber] = React.useState(1)
     React.useEffect(() =>{
-        fetch(name ? props.url.replace("query=",`query=${name}`) : props.url.replace("genres=",`genres=${id}`).replace("page=1",`page=${pageNumber}`))
+        const controller = new AbortController()
+        fetch(name ? props.url.replace("query=",`query=${name}`) : props.url.replace("genres=",`genres=${id}`).replace("page=1",`page=${pageNumber}`,{signal: controller.signal}))
         .then(res => res.json())
         .then(data => {
           setData(data.results)
         })
+
+        return () => controller.abort()
+
       },[id,pageNumber,props.url,name])
     React.useEffect(() => setPageNumber(1),[id,name])
     console.log(data)
