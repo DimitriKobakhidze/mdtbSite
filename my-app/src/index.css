@@ -107,6 +107,8 @@ body{
   display: flex;
   position: relative;
   border: solid 1px white;
+  min-width: 220px;
+  min-height: 330px;
 }
 .page-name{
   font-family: 'Silkscreen', cursive;
@@ -200,6 +202,46 @@ body{
 }
 .details-genre-list{
   margin-bottom: 7px;
+}
+.loading-icon {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+}
+.loading-icon:after {
+  content: " ";
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 6px solid #fff;
+  border-color: #fff transparent #fff transparent;
+  animation: loading-icon 1.2s linear infinite;
+}
+.load-wrapper{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  row-gap: 22px;
+}
+.load-wrapper h1{
+  color: white;
+}
+
+
+@keyframes loading-icon {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 

@@ -29,6 +29,7 @@ export default function Page(props){
     const {name} = useParams()
     const [data,setData] = React.useState([])
     const [pageNumber,setPageNumber] = React.useState(1)
+
     React.useEffect(() =>{
         const controller = new AbortController()
         fetch(name ? props.url.replace("query=",`query=${name}`) : props.url.replace("genres=",`genres=${id}`).replace("page=1",`page=${pageNumber}`,{signal: controller.signal}))
@@ -37,11 +38,14 @@ export default function Page(props){
           setData(data.results)
         })
 
-        return () => controller.abort()
+        return () => {
+            setData([])
+            controller.abort()
+        }
 
       },[id,pageNumber,props.url,name])
     React.useEffect(() => setPageNumber(1),[id,name])
-    console.log(data)
+
     return(
         <>
             {data.length > 0 ?
@@ -58,7 +62,11 @@ export default function Page(props){
                     </div>
                 }
             </>
-            : <h1 style={{color:"#ce3536"}} className="page-name">Nothing Found</h1>
+            : 
+                <div className="load-wrapper">
+                    <h1>Loading...</h1>
+                    <div className="loading-icon" />
+                </div>
             }
         </>
     )
