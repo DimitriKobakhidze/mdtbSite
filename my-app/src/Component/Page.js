@@ -1,7 +1,8 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import Card from "./Card";
 
+import Card from "./Card";
+import LoadingElement from "./UI/LoadingElement";
 const genresData = 
 [
   {id:28,name:"Action"},
@@ -52,7 +53,9 @@ export default function Page(props){
             <>
                 <h1 className="page-name">{id ? genresData.filter(item => item.id == id)[0].name : name ? "You Are Searching" :"Popular Now"}</h1>
                 <div className="items-container">
-                    {data.map((item,id) => <Card key={id} data={item}/>)}    
+                    {data.map((item,id) => 
+                        <Card key={id} data={item}/>)
+                    }    
                 </div>
 
                 {!name &&
@@ -65,7 +68,7 @@ export default function Page(props){
             : 
                 <div className="load-wrapper">
                     <h1>Loading...</h1>
-                    <div className="loading-icon" />
+                    <LoadingElement />
                 </div>
             }
         </>
